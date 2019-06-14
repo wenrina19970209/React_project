@@ -14,7 +14,7 @@ export default class Login extends Component{
             <div className='login'>
                 <header className='login-header'>
                     <img src={logo} alt=""/>
-                    <h1>React项目: 后台管理系统</h1>
+                    <h1>React 项目: 后台管理系统</h1>
                 </header>
                 <section className='login-content'>
                     <h2>User login to lu</h2>
