@@ -13,8 +13,8 @@ export default class App extends React.Component{
         return (
                 <HashRouter>
                     <Switch>
-                        <Route path='/login' component={Login}/>
-                        <Route path='/' component={Admin}/>
+                        <Route path='/' component={Login}/>
+                        <Route path='/admin' component={Admin}/>
                     </Switch>
                 </HashRouter>
         )
