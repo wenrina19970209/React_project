@@ -1,5 +1,5 @@
 /* 
-根组件
+主后台应用管理根组件
 */
 import React from 'react'
 // import {Button} from 'antd'
