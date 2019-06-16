@@ -13,6 +13,7 @@ const Item = Form.Item
     handleSubmit = (event)=>{
         event.preventDefault();
 
+        //收集数据
         this.props.form.validateFields((err,values)=>{
             if(!err){
                 console.log('成功发送Ajax请求！',values)
@@ -52,7 +53,7 @@ const Item = Form.Item
                     <h1>React 项目: 后台管理系统</h1>
                 </header>
                 <section className='login-content'>
-                    <h2>User login to lu</h2>
+                    <h2>用户登录</h2>
                     <Form onSubmit={this.handleSubmit} className="login-form">
                         <Item>
                             {
