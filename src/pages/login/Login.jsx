@@ -4,19 +4,29 @@ Fragment
 */
 import React,{Component} from 'react'
 import logo from './images/logo.png'
-import { Form, Icon, Input, Button } from 'antd';
+
+import { Form, Icon, Input, Button} from 'antd';
+
+import {reLogin} from '../../api/index'
 import './login.less'
+
+
 const Item = Form.Item
 
- class Login extends Component{
+class Login extends Component{
 
     handleSubmit = (event)=>{
         event.preventDefault();
 
         //收集数据
         this.props.form.validateFields((err,values)=>{
+           
             if(!err){
-                console.log('成功发送Ajax请求！',values)
+               
+                // console.log('成功发送Ajax请求！',values)
+              /*   let {username,password} = values
+                let result = reLogin(username,password) */
+         
             }
         })
         
