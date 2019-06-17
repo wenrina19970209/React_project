@@ -3,29 +3,52 @@
 Fragment
 */
 import React,{Component} from 'react'
-import logo from './images/logo.png'
+import { Form, Icon, Input, Button,message} from 'antd';
 
-import { Form, Icon, Input, Button} from 'antd';
+
+import { Redirect } from "react-router-dom";
 
 import {reLogin} from '../../api/index'
+import logo from '../../assets/image/logo.png'
 import './login.less'
+
+import memoryUtils from '../../utils/memoryUtils'
+import {saveUser} from '../../utils/storageUtils'
 
 
 const Item = Form.Item
 
-class Login extends Component{
+ class Login extends Component{
 
     handleSubmit = (event)=>{
+
         event.preventDefault();
 
-        //收集数据
-        this.props.form.validateFields((err,values)=>{
+        //统一验证表单中的每一项
+        this.props.form.validateFields(async (err,values)=>{
            
-            if(!err){
+            if(!err){//验证成功
                
                 // console.log('成功发送Ajax请求！',values)
-              /*   let {username,password} = values
-                let result = reLogin(username,password) */
+                const {username,password} = values  //解构赋值，获取标识
+                
+                const result = await reLogin(username,password)  // {status: 0, data: user对象} | {status: 1, msg: 'xxx'}
+
+                if(result.status === 0){//成功登录
+                    const user = result.data
+                
+                    //保存数据
+                    saveUser(user) //保存到localStorage的文件中，
+                    memoryUtils.user = user //保存到内存中
+                    
+                    //跳转到Admin页面
+                    this.props.history.replace('/')
+                }else{//登录失败
+                    message.error(result.msg ,2)
+                }
+
+               
+
          
             }
         })
@@ -55,11 +78,20 @@ class Login extends Component{
     }
     
     render(){
+        // debugger
+
         let {getFieldDecorator} = this.props.form;
+
+        //访问login界面。如果用户登录过了，就直接跳转到admin界面
+        if (memoryUtils.user._id) {
+            return <Redirect to='/'/>
+        }
+
+
         return (
             <div className='login'>
                 <header className='login-header'>
-                    <img src={logo} alt=""/>
+                    <img src={logo} alt="logo"/>
                     <h1>React 项目: 后台管理系统</h1>
                 </header>
                 <section className='login-content'>
@@ -69,8 +101,10 @@ class Login extends Component{
                             {
                                 getFieldDecorator('username',{//配置对象
 
+                                    //指定初始值伪空串
                                     initialValue:'',
                                    
+                                    //声明式验证
                                     rules:[
                                         {required:true,message:'请输入用户名！'},
                                         {min:4,message:'用户名不能小于4位'},
