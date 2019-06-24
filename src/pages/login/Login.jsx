@@ -40,7 +40,7 @@ const Item = Form.Item
                     //保存数据
                     saveUser(user) //保存到localStorage的文件中，
                     memoryUtils.user = user //保存到内存中
-                    
+                   
                     //跳转到Admin页面
                     this.props.history.replace('/')
                 }else{//登录失败

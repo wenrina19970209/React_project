@@ -28,7 +28,7 @@ const { Footer, Sider, Content } = Layout;
 
 
 /* 
-一级路由
+后台管理的一级路由
 */
 export default class Admin extends React.Component{
 
@@ -63,7 +63,7 @@ export default class Admin extends React.Component{
                             <Route path='/charts/bar' component={Bar}/>
                             <Route path='/charts/pie' component={Pie}/>
                             <Route path='/charts/line' component={Line}/>
-                            <Redirect to='/Home'/>
+                            <Redirect to='/home'/>
                         </Switch>
 
                     </Content>

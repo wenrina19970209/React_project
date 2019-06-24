@@ -74,8 +74,8 @@ class LeftNav extends Component {
             )
         }else{
             //如果请求的是当前item.children中的某一个item对应path,那么当前的item的key就是openKey
-           const cItem=  item.children.find((cItem,index)=> cItem.key === path)
-            if(cItem){
+           const cItem=  item.children.find((cItem,index)=> path.indexOf(cItem.key)===0)
+            if(cItem){//当前请求的是二级路由
                 this.openKey = item.key
             }
             pre.push(
@@ -98,12 +98,18 @@ class LeftNav extends Component {
       },[])
     }
 
+    componentWillMount(){
+        this.menusNodes = this.getMenusNode2(menuList)
+    }
 
     render() {
-       
-        let menusNodes = this.getMenusNode2(menuList)
-        let electedKey = this.props.location.pathname
-
+        //将请求路径作为初始选中的key
+        let selectedKey = this.props.location.pathname
+        if(selectedKey.indexOf('/product')=== 0){
+            selectedKey = '/product'
+        }
+        // console.log(selectedKey)
+        //得到要展开的SubMenu的key值
         const openKey =this.openKey
         return (
             <div className='left-nav'>
@@ -116,12 +122,12 @@ class LeftNav extends Component {
                 <Menu
                 mode="inline"
                 theme="dark"
-                selectedKeys={[electedKey]}
+                selectedKeys={[selectedKey]}
                 defaultOpenKeys={[openKey]}
                 >
                     
                     {
-                         menusNodes
+                       this.menusNodes
                     }
 
                     
